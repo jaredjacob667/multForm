@@ -1,0 +1,160 @@
+
+/*******************  CSS RESET *************************/
+/* http://meyerweb.com/eric/tools/css/reset/ 
+v2.0 | 20110126
+License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1.25;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+
+/************************ END OF CSS RESET **************************/
+
+
+
+/* gives a little space from edge and gives font to whole page */
+body {
+	padding-left: 10px;
+	padding-top: 10px;
+	font-family: 'Droid Serif', serif;
+}
+
+/* attempting to space form from table 
+  still researching issue, added <br> under form for hotfix */
+form {
+	width: 400px;
+	margin-bottom: 30px;
+}
+
+/* The next two line up the input bars on the right and the labels for them on the left.*/
+form input {
+	float: right;
+	padding-bottom: 5px;
+}
+
+form label {
+	font-size: 16pt;
+	padding-bottom: 5px;
+}
+
+/* submit button styles  generated from
+  http://css-tricks.com/examples/ButtonMaker/   
+  */
+
+.btn {
+  border-top: 1px solid #96d1f8;
+  background: #43d0bb;
+  background: -webkit-gradient(linear, left top, left bottom, from(#3e779d), to(#65a9d7));
+  background: -webkit-linear-gradient(top, #3e779d, #65a9d7);
+  background: -moz-linear-gradient(top, #3e779d, #65a9d7);
+  background: -ms-linear-gradient(top, #3e779d, #65a9d7);
+  background: -o-linear-gradient(top, #3e779d, #65a9d7);
+  padding: 9px 18px;
+  -webkit-border-radius: 38px;
+  -moz-border-radius: 38px;
+  border-radius: 38px;
+  -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+  -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+  box-shadow: rgba(0,0,0,1) 0 1px 0;
+  text-shadow: rgba(0,0,0,.4) 0 1px 0;
+  color: white;
+  font-size: 20px;
+  font-family: Georgia, serif;
+  text-decoration: none;
+  vertical-align: middle;
+  width:100px;
+  float: left;
+}
+.btn:hover {
+  border-top-color: #28597a;
+  background: #28597a;
+  color: #000000;
+}
+
+h1{
+	font-size: 32pt;
+	margin-bottom: 20px;
+	color: #43d0bb;
+}
+
+p {
+  font-size: 14pt;
+  margin-bottom: 20px;
+}
+
+#error {
+	font-weight: bold;
+	color: red;
+	font-size: 14pt;
+}
+
+/* attempting to space this from form. 
+  still researching issue, added <br> under form for hotfix */
+table {
+	margin-top: 30px;
+}
+
+/*this helps make the row and column headers stand out from the rest of the table */
+th {
+	font-weight: bold;
+	font-size: 12pt;
+}
+
+/* each dynamically created cell gets a border and padding to 
+	 make it easier to read */
+td {
+	font-size: 12pt;
+	border: 1px solid black;
+	padding: 5px;
+}
+
+/* 
+class is added dynamically using jQuery. This highlights the row 
+and column from the cell hovered over
+reference: http://stackoverflow.com/questions/23686095/table-row-and-column-highlighting-with-jquery
+*/
+.hover {
+	background-color: #25ada1;
+}

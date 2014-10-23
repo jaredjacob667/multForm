@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+  <!--  
+	File: /~jjacob/public_html/Assignment6/multForm.html
+	91.461 Assignment: Creating an Interactive Dynamic Table
+  Created by: Jared Jacob
+  email: jaredjacob667@gmail.com
+  UMass lowell computer science student 91.461 GUI Programming 1
+  UPDATED: 10/21/14
+
+  Description: This page takes user entered numbers to create a dynamic 
+  multiplication table. This current page contains the form for the user
+  to add his or her own numbers.
+  -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+	<!-- Google Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
+	
+	<!-- My custom css for the multForm page -->
+  <link rel="stylesheet" type="text/css" href="multForm.css"> 
+
+	<title>Multiplication Table Form</title>
+
+</head>
+<body>
+
+	<h1> Multiplication Table Maker </h1>
+	<p>Please enter a starting and ending value for the multiplier and multiplicand to for the table.</p>
+
+	<!-- action="javascript:void(0)"  default is to reload the page.
+		   currently fixed in processing function which returns false in
+		   order to not reload page -->
+	<form name="multForm" id="multForm">
+
+		<!-- 
+		Each input here is limited to only up to 4 digit numbers. This is where the user
+		inputs the span of numbers they would like the multiplication table to be.
+
+		reference to javascript for number constraint
+		http://stackoverflow.com/questions/469357/html-text-input-allow-only-numeric-input 
+		-->
+		<label>Starting Multiplier:</label> 
+		<input type="number" max="9999" name="startMultiplier" id="startMultiplier">
+		<br>
+		
+		<label>Ending Multiplier:</label>
+		<input type="number" max="9999" name="endMultiplier" id="endMultiplier">
+		<br>
+		
+		<label>Starting Multiplicand:</label> 
+		<input type="number" max="9999" name="startMultiplicand" id="startMultiplicand">
+		<br>
+		
+		<label>Ending Multiplicand:</label> 
+		<input type="number" max="9999" name="endMultiplicand" id="endMultiplicand">
+		<br>
+		
+		<input type="submit" name="submit" id="submit" class="btn">
+		
+	</form>
+	<br><br> <!--Placed in order to space table from form, was not working using css -->
+
+	<!-- Container of multiplication table that will be created with javascript -->
+	<div id="multTable">		
+	</div>
+
+	<script type="text/javascript">
+		
+		//JQuery submit functionality: Returns my function on the submission of form
+		$(document).ready(function() {
+			$('#multForm').submit(function (){
+				return processing();
+			}); 
+		});
+
+
+		function processing() {
+			//Gather user input values.
+			var startMultiplier = $("input#startMultiplier").val();
+			var startMultiplicand = $("input#startMultiplicand").val();
+			var endMultiplier = $("input#endMultiplier").val();
+			var endMultiplicand = $("input#endMultiplicand").val();
+
+			//Holds HTML string to append to page with dynamically created multiplication table.
+			var str = "";
+
+			// Holds the product of each single number in the row and column
+			var product;
+
+			//Arrays that hold the values for each header of the table from the user entered values
+			// These will take the start and end the user inputted and populate the arrays with the
+			// starting number counted up to the ending number. Across represents the row and down
+			// represents the column.
+			var across = [];
+			var down = [];
+
+			//Form validation: checks that input is numbers not letters
+			/* **Changing input to number makes form not allow letters to be submitted.
+			
+			if((!$.isNumeric(startMultiplier)) || (!$.isNumeric(endMultiplier)) ||
+					(!$.isNumeric(startMultiplicand)) || (!$.isNumeric(endMultiplicand)) ) 
+			{
+				str += "<p id='error'>Letter cannot be processed, Please enter numbers only</p>";
+				$("#multTable").html(str);
+				return false; // makes page not reload  looking for return in jquery function 
+			}
+			*/
+
+			//Form validation: checks for negative or zero range
+			if((endMultiplicand - startMultiplicand) <= 0 || (endMultiplier - startMultiplier) <= 0) {
+				str += "<p id='error'>Range cannot be zero, please enter new numbers.</p>";
+				$("#multTable").html(str);
+				return false; /* makes page not reload  looking for return in jquery function */
+			}
+
+			//This populates the across array with the counted integer values from start to end
+			for(var i=startMultiplier; i<=endMultiplier; i++)
+			{
+			  across.push(i);
+			}
+
+			//DEBUGGING LOGS
+			console.log(endMultiplier);
+			console.log(startMultiplier);
+			console.log(across.toString());
+
+			//This populates the down array with the counted integer values from start to end
+			for(i=startMultiplicand; i<=endMultiplicand; i++)
+			{
+			  down.push(i);
+			}
+
+			//Form validation: checks for range of 50 numbers.
+			if(down.length > 51 || across.length > 51) {
+				str += "<p id='error'>Max range is between numbers is 50, please enter new numbers</p>";
+				$("#multTable").html(str);
+				return false; /* makes page not reload  looking for return in jquery function */
+			}
+
+
+			//Creates the intial header row. This shows on the top row across
+			//going from the users start value counted up to the users end value.
+			//** extra th added to avoid being placed in the corner cell and leaving it blank 
+			str += "<tr><th></th>";
+			for(i=0; i<across.length; i++)
+			{
+				str += "<th>";
+				str += across[i];
+				str += "</th>";
+			}
+			str += "</tr>";
+
+			// These nested for loops populate the products of the table. It starts on the first column
+			// adding a row and multiplying itself by each row value and placing it into the str variable 
+			// which will be the string appended to the html page.
+			for(var y=0; y<down.length; y++)
+			{
+				//This section adds the column headers using the users start value
+				// counted to the users end value
+			  str += "<tr><th>";
+			  str += down[y];
+			  str += "</th>"
+
+			  for(var x=0; x<across.length; x++)
+			  {
+			    str += "<td>";
+			    product = down[y] * across[x];
+			    str += product;
+			    str += "</td>";
+			  }
+			  
+			  str += "</tr>";
+			}
+			//Debugging
+			//console.log(str);
+
+			//Adds fully constructed table html string to the page.
+			$("#multTable").html(str);
+
+			 
+			//Dynamically adds class hover to the cell that is hovered over
+			//along with row and column up to the header. 
+			//reference: http://stackoverflow.com/questions/23686095/table-row-and-column-highlighting-with-jquery
+			$('td').on('mouseover mouseout', function(){
+    		$(this).prevAll().addBack()
+     		.add($(this).parent().prevAll()
+     		.children(':nth-child(' + ($(this).index() + 1) + ')'))
+     		.toggleClass('hover');
+      });
+
+			/* makes page not reload  looking for return in jquery function */
+			return false; 
+		}
+	</script>
+
+</body>
+</html>
